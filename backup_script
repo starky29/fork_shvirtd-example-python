@@ -1,0 +1,8 @@
+#!/bin/bash
+now=$(date +"%s_%Y-%m-%d")
+docker run \
+    --rm --entrypoint "" \
+    -v /opt/backup:/backup \
+    --link fork_shvirtd-example-python-db-1:db --net fork_shvirtd-example-python_backend \
+    schnitzler/mysqldump \
+    mysqldump --opt -h db -uroot -p$MYSQL_ROOT_PASSWORD "--result-file=/backup/${now}_dumps.sql" databases $MYSQL_DATABASE
